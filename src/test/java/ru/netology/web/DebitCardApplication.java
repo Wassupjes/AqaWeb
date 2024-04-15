@@ -31,6 +31,7 @@ class DebitCardApplication {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+        driver.get("http://localhost:7777");
     }
 
     @AfterEach
@@ -41,14 +42,25 @@ class DebitCardApplication {
 
     @Test
     void shouldDebitCardApplicationPositive() throws InterruptedException {
-        driver.get("http://localhost:7777");
-        driver.findElement(By.cssSelector("[data-test-id=name]")).sendKeys("Владимиров Василий");
-        driver.findElement(By.cssSelector("[data-test-id=phone]")).sendKeys("+79888888888");
-        driver.findElement(By.className("checkbox__control")).click();
+
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.className("Success")).getText();
-        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время", text.trim());
+        var actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", actualText);
         Thread.sleep(50000);
     }
+    @Test
+    void invalidValueOfEnteringLastAndFirstName() throws InterruptedException {
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Vladimirov Vasiliy");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        driver.findElement(By.className("button")).click();
+        var actualText = driver.findElement(By.className("input__sub")).getText();
+        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", actualText);
+        Thread.sleep(50000);
+        }
     }
+
 
