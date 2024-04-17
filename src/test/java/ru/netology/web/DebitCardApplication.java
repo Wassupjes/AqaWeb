@@ -8,11 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-
 import org.openqa.selenium.chrome.ChromeOptions;
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -31,7 +27,7 @@ class DebitCardApplication {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        driver.get("http://localhost:7777");
+        driver.get("http://localhost:9999");
     }
 
     @AfterEach
@@ -42,24 +38,25 @@ class DebitCardApplication {
 
     @Test
     void shouldDebitCardApplicationPositive() throws InterruptedException {
-
+        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
-        var actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", actualText);
-        Thread.sleep(50000);
+        Thread.sleep(5000);
     }
     @Test
     void invalidValueOfEnteringLastAndFirstName() throws InterruptedException {
+        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Vladimirov Vasiliy");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
-        var actualText = driver.findElement(By.className("input__sub")).getText();
+        String actualText = driver.findElement(By.className("input__sub")).getText();
         assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", actualText);
-        Thread.sleep(50000);
+        Thread.sleep(5000);
         }
     }
 
