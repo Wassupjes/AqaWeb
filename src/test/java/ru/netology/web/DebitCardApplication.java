@@ -39,19 +39,20 @@ class DebitCardApplication {
 
     @Test
     void shouldDebitCardApplicationPositive() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
         String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", actualText);
+        Thread.sleep(5000);
     }
 
     @Test
         // ввод латинских букв в поле фамилия и имя
     void enteringLatinLetters() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Vladimirov Vasiliy");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -62,7 +63,7 @@ class DebitCardApplication {
 
     @Test
     void emptyLastNameAndFirstNameField() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -74,7 +75,7 @@ class DebitCardApplication {
     @Test
     // ввод спецсимволов в поле фамилия и имя
     void enteringSpecialCharacters() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров/ Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -87,7 +88,7 @@ class DebitCardApplication {
     @Test
         // ввод имени с буквой ё в поле фамилия и имя
     void invalidLetter() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Семён");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -99,7 +100,7 @@ class DebitCardApplication {
     @Test
     // ввод 11значного номера без +
     void invalidPhoneEntryFirst() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("79888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -111,7 +112,7 @@ class DebitCardApplication {
     @Test
         // ввод 12значного номера
     void invalidPhoneEntrySecond() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+798888888888");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -123,7 +124,7 @@ class DebitCardApplication {
     @Test
         // ввод букв в поле номера
     void invalidPhoneEntryThird() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+798888888аа");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -135,7 +136,7 @@ class DebitCardApplication {
     @Test
         // пустое поле номера
     void invalidPhoneEntryFourth() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
@@ -147,7 +148,7 @@ class DebitCardApplication {
     @Test
         // не проставлена галочка напротив строки Согласия на обработку данных
     void submittingFormWithoutConsent() throws InterruptedException {
-        driver.get("http://localhost:7777");
+
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Владимиров Василий");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79888888888");
         driver.findElement(By.className("button")).click();
